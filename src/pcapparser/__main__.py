@@ -4,7 +4,8 @@ from tkinter.filedialog import askopenfilename
 import dpkt
 
 pcap_file = askopenfilename(defaultextension="pcap", filetypes=[("Pcap", ".pcap")])
-urls = set()
+
+urls = {}
 
 with open(pcap_file, "rb") as f:
     pcap = dpkt.pcap.Reader(f)
@@ -21,9 +22,10 @@ with open(pcap_file, "rb") as f:
             if r is not None and base is not None:
                 auth = r.group().decode("ascii")
                 url = f"{base}/{auth}"
-                urls.add(url)
+                room, _ = auth.split("?")
+                urls[room] = url
                 base = None
 
-result = "\n".join(urls)
+result = "\n".join(urls.values())
 with open("urls.txt", "w", encoding="utf-8") as f:
     f.write(result)
