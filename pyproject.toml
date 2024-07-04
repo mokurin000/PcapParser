@@ -1,0 +1,21 @@
+[project]
+name = "PcapParser"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "poly000", email = "1348292515a@gmail.com"},
+]
+dependencies = [
+    "dpkt>=1.9.8",
+]
+requires-python = ">=3.12"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+
+[tool.pdm]
+distribution = true
