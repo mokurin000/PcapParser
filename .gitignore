@@ -163,3 +163,6 @@ cython_debug/
 
 *.pcap
 *.txt
+
+# Video output
+/out
