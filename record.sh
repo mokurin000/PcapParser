@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-OUT_DIR="out"
+export OUT_DIR="out"
+export OUT_PID_FILE="vlc_pids_${RANDOM}.txt"
 
-rm -f vlc_pid.txt
 mkdir -p $OUT_DIR
 
 for url in `cat urls.txt` 
@@ -18,7 +18,7 @@ do
         fi
         vlc -I dummy $url --sout file/ts:${filename} &> /dev/null &
         vlc_pid=$!
-        echo $vlc_pid >> vlc_pid.txt
+        echo $vlc_pid >> $OUT_PID_FILE
         sleep 3
         size=$(LANG=C stat ${filename} | head -2 | tail -1 | cut -d ' ' -f 4)
         if [[ ${size} == 0 ]]
@@ -32,6 +32,6 @@ done
 
 wait
 
-for pid in `cat vlc_pid.txt`
+for pid in $(cat $OUT_PID_FILE)
     kill -9 $pid
 do 
