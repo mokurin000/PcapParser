@@ -1,9 +1,13 @@
 import re
-from tkinter.filedialog import askopenfilename
+from sys import argv
 
 import dpkt
 
-pcap_file = askopenfilename(defaultextension="pcap", filetypes=[("Pcap", ".pcap")])
+pcap_file = argv[1] if len(argv) > 1 else ""
+
+if not pcap_file:
+    from tkinter.filedialog import askopenfilename
+    pcap_file = askopenfilename(defaultextension="pcap", filetypes=[("Pcap", ".pcap")])
 
 # User cancellation
 if not pcap_file:
