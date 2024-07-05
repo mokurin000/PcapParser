@@ -5,6 +5,10 @@ import dpkt
 
 pcap_file = askopenfilename(defaultextension="pcap", filetypes=[("Pcap", ".pcap")])
 
+# User cancellation
+if not pcap_file:
+    exit(0)
+
 urls = {}
 
 with open(pcap_file, "rb") as f:
