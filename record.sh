@@ -6,7 +6,12 @@ do
     room_id=${room_id%\?*}
     (
         filename=out/${room_id}_out.mpg
-        vlc -I dummy $url --sout file/ts:${filename} &
+        if [ -f $filename ]
+        then
+            echo $filename exists, skipping...
+            exit 1
+        fi
+        vlc -I dummy $url --sout file/ts:${filename} &> /dev/null &
         vlc_pid=$!
         echo $vlc_pid >> vlc_pid.txt
         sleep 3
