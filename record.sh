@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 
+OUT_DIR="out"
+
+rm -f vlc_pid.txt
+mkdir -p $OUT_DIR
+
 for url in `cat urls.txt` 
 do
     room_id=${url##*/}
     room_id=${room_id%\?*}
     (
-        filename=out/${room_id}_out.mpg
+        filename=${OUT_DIR}/${room_id}_out.mpg
         if [ -f $filename ]
         then
             echo $filename exists, skipping...
@@ -26,3 +31,7 @@ do
 done
 
 wait
+
+for pid in `cat vlc_pid.txt`
+    kill -9 $pid
+do 
