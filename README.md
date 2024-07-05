@@ -26,4 +26,16 @@ pcap-parser
 pcap-parser ./xxxx.pcap
 ```
 
+### Other Utils
+
+#### Check new live automatically
+
+```bash
+while true
+do
+    ./record.sh
+    sleep 10
+done
+```
+
 It will override `urls.txt` in current workdir

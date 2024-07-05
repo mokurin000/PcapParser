@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 export OUT_DIR="out"
-export OUT_PID_FILE="vlc_pids_${RANDOM}.txt"
 
 mkdir -p $OUT_DIR
 
@@ -16,14 +15,11 @@ do
             echo $filename exists, skipping...
             exit 1
         fi
-        vlc -I dummy $url --sout file/ts:${filename} &> /dev/null &
-        vlc_pid=$!
-        echo $vlc_pid >> $OUT_PID_FILE
+        vlc -I dummy $url --sout file/ts:${filename} &> /dev/null
         sleep 3
         size=$(LANG=C stat ${filename} | head -2 | tail -1 | cut -d ' ' -f 4)
         if [[ ${size} == 0 ]]
         then
-            kill $vlc_pid
             rm $filename
         fi
         wait
@@ -31,7 +27,3 @@ do
 done
 
 wait
-
-for pid in $(cat $OUT_PID_FILE)
-    kill -9 $pid
-do 
