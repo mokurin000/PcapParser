@@ -34,7 +34,7 @@ pcap-parser ./xxxx.pcap
 while true
 do
     ./record.sh
-    sleep 10
+    sleep 60
 done
 ```
 

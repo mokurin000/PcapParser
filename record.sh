@@ -15,12 +15,19 @@ do
             echo $filename exists, skipping...
             exit 1
         fi
-        vlc -I dummy $url --sout file/ts:${filename} &> /dev/null
+        vlc -I dummy $url --sout file/ts:${filename} &> /dev/null &
         sleep 3
+
+        # kill unneeded vlc process
         size=$(LANG=C stat ${filename} | head -2 | tail -1 | cut -d ' ' -f 4)
         if [[ ${size} == 0 ]]
         then
             rm $filename
+            if pid=$(pgrep -f file/ts:$filename)
+            then
+                kill $pid
+                echo killed $pid
+            fi
         fi
         wait
     ) &
